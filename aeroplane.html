@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript</title>
+</head>
+
+<body>
+    <h2>Check Output Below</h2>
+    <div id="output"></div>
+    <script>
+        function minPlanesToDestination(fuel) {
+            const N = fuel.length;
+            if (N === 0) return -1; // no airports
+
+            let planesHired = 0;
+            let currentPosition = 0;
+            let maxReach = 0;
+            let lastReach = 0;
+
+            while (currentPosition <= maxReach) {
+                // console.log("currentPosition",currentPosition)
+                // console.log("lastReach",lastReach)
+                // console.log("maxReach",maxReach)
+                // console.log("planesHired",planesHired)
+
+                // Update the farthest reachable airport
+                maxReach = Math.max(maxReach, currentPosition + fuel[currentPosition]);
+                // console.log("maxReach",maxReach)
+
+                // If we can reach the last airport
+                if (maxReach >= N - 1) {
+                    return planesHired + 1;
+                }
+
+                // If we need to hire another plane
+                if (currentPosition === lastReach) {
+                    planesHired++;
+                    lastReach = maxReach;
+                }
+
+                currentPosition++;
+            }
+
+            // If we cannot reach the last airport
+            return -1;
+        }
+
+        // Function to display output in the div
+        function showOutput(result, array) {
+            document.getElementById("output").innerText = "Array[" + array + "] :   " + result;
+        }
+
+        // Test case
+        // let array = [2, 1, 2, 3, 1];
+        let array = [1, 6, 3, 4, 5, 0, 0, 0, 6];
+        let result = minPlanesToDestination(array);
+        showOutput(result, array);
+
+    </script>
+</body>
+
+</html>
